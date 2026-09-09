@@ -4,6 +4,7 @@ WORKDIR /app
 COPY . .
 RUN chmod +x mvnw
 RUN ./mvnw clean package -DskipTests
+RUN ls -la /app/target/
 
 # Fase 2: Esecuzione dell'applicazione
 FROM eclipse-temurin:17-jre-jammy
