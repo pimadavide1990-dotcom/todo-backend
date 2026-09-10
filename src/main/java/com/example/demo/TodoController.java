@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/todos")
-@CrossOrigin(origins = "*") // Risolve definitivamente il blocco CORS permettendo chiamate da qualsiasi origine
+@CrossOrigin(origins = "*")
 public class TodoController {
 
     @Autowired
@@ -35,10 +35,10 @@ public class TodoController {
                 .map(todo -> {
                     todo.setTitle(todoDetails.getTitle());
                     todo.setCompleted(todoDetails.isCompleted());
-                    Todo updatedTodo = todoRepository.save(todo);
-                    ResponseEntity<Todo> ok = ResponseEntity.ok(updatedTodo);
-                    return ok;
+                    return todo;
                 })
+                .map(todoRepository::save)
+                .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
